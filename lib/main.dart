@@ -26,34 +26,24 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Github search'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: TextField(
-          controller: myController,
+        appBar: AppBar(
+          title: Text('Github search'),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        // When the user presses the button, show an alert dialog with the
-        // text the user has typed into our text field.
-        onPressed: () {
-          return showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                // Retrieve the text the user has typed in using our
-                // TextEditingController
-                content: Text(myController.text),
-              );
-            },
-          );
-        },
-        tooltip: 'Show me the value!',
-        child: Icon(Icons.text_fields),
-      ),
-    );
+        body: Column(
+          children: <Widget>[
+            Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(
+                  controller: myController,
+                )),
+            new Expanded(
+                child: ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (BuildContext ctxt, int index) {
+                      return Card(child: Text("Hello"));
+                    }))
+          ],
+        ));
   }
 
   @override
