@@ -1,3 +1,9 @@
+class GithubUserResponse {
+  int totalCount;
+  bool incompleteResults;
+  List<GithubUser> items;
+}
+
 class GithubUser {
   final String login;
   final int id;
