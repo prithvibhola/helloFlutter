@@ -1,7 +1,18 @@
 class GithubUserResponse {
   int totalCount;
   bool incompleteResults;
-  List<GithubUser> items;
+  List<GithubUser> items = [];
+
+  GithubUserResponse.fromJson(Map<String, dynamic> parsedJson) {
+    totalCount = parsedJson['total_Ωcount'];
+    incompleteResults = parsedJson['incomplete_results'];
+    List<GithubUser> temp = [];
+    for (int i = 0; i < parsedJson['results'].length; i++) {
+      GithubUser githubUser = GithubUser.fromJson(parsedJson['items'][i]);
+      temp.add(githubUser);
+    }
+    items = temp;
+  }
 }
 
 class GithubUser {
