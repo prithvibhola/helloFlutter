@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../blocs/github_bloc.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,6 +25,13 @@ class _MyHomePageState extends State<MyHomePage> {
   final myController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+
+    myController.addListener(_getGithubUsers());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -44,6 +52,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     }))
           ],
         ));
+  }
+
+  _getGithubUsers() {
+
   }
 
   @override
