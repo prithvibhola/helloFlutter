@@ -4,12 +4,12 @@ import '../models/models.dart';
 
 class GithubBloc {
   final gitRepo = GithubRepository();
-  final subject = PublishSubject<GithubUser>();
+  final subject = PublishSubject<GithubUserResponse>();
 
-  Observable<GithubUser> get gitUsers => subject.stream;
+  Observable<GithubUserResponse> get gitUsers => subject.stream;
 
   getGithubUsers(String query) async {
-    GithubUser itemModel = await gitRepo.getGithubUsers(query);
+    GithubUserResponse itemModel = await gitRepo.getGithubUsers(query);
     subject.sink.add(itemModel);
   }
 

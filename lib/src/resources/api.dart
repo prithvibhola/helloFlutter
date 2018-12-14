@@ -6,12 +6,12 @@ import '../models/models.dart';
 class ApiProvider {
   Client client = Client();
 
-  Future<GithubUser> getGithuUsers(String query) async {
+  Future<GithubUserResponse> getGithuUsers(String query) async {
     final response =
         await client.get("https://api.github.com/search/users?q=$query");
     print(response.body.toString());
     if (response.statusCode == 200) {
-      return GithubUser.fromJson(json.decode(response.body));
+      return GithubUserResponse.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load post');
     }

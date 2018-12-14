@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_flutter/src/models/models.dart';
 import '../blocs/github_bloc.dart';
 
 void main() => runApp(MyApp());
@@ -44,18 +45,38 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: TextField(
                   controller: myController,
                 )),
-            new Expanded(
-                child: ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (BuildContext ctxt, int index) {
-                      return Card(child: Text("Hello"));
-                    }))
+            new StreamBuilder(
+                stream: bloc.gitUsers,
+                builder: (context, AsyncSnapshot<GithubUserResponse> snapshot) {
+                  if (snapshot.hasData) {
+                    return buildList(snapshot);
+                  } else if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  }
+                  return Center(child: CircularProgressIndicator());
+                })
+//            new Expanded(
+//                child: ListView.builder(
+//                    itemCount: 10,
+//                    itemBuilder: (BuildContext ctxt, int index) {
+//                      return Card(child: Text("Hello"));
+//                    }))
           ],
         ));
   }
 
-  _getGithubUsers() {
+  Widget buildList(AsyncSnapshot<GithubUserResponse> snapshot) {
+    return Expanded(
+        child: ListView.builder(
+            itemCount: snapshot.data.items.length,
+            itemBuilder: (BuildContext ctxt, int index) {
+              return Card(
+                  child: Text(snapshot.data.items[index].id.toString()));
+            }));
+  }
 
+  _getGithubUsers() {
+    bloc.getGithubUsers(myController.text);
   }
 
   @override
