@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/src/models/models.dart';
 import '../blocs/github_bloc.dart';
+import 'package:hello_flutter/src/models/models.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,41 +28,47 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    myController.addListener(_printLatestValue);
+  }
 
-    myController.addListener(_getGithubUsers());
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
+
+  _printLatestValue() {
+//    bloc.getGithubUsers(myController.text);
+    print(myController.text);
+//    print("Second text field: ${myController.text}");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Github search'),
-        ),
-        body: Column(
-          children: <Widget>[
-            Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextField(
+      appBar: AppBar(
+        title: Text('Github search'),
+      ),
+        body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: <Widget>[
+                TextField(
                   controller: myController,
-                )),
-            new StreamBuilder(
-                stream: bloc.gitUsers,
-                builder: (context, AsyncSnapshot<GithubUserResponse> snapshot) {
-                  if (snapshot.hasData) {
-                    return buildList(snapshot);
-                  } else if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
-                  }
-                  return Center(child: CircularProgressIndicator());
-                })
-//            new Expanded(
-//                child: ListView.builder(
-//                    itemCount: 10,
-//                    itemBuilder: (BuildContext ctxt, int index) {
-//                      return Card(child: Text("Hello"));
-//                    }))
-          ],
-        ));
+                ),
+                StreamBuilder(
+                    stream: bloc.gitUsers,
+                    builder:
+                        (context, AsyncSnapshot<GithubUserResponse> snapshot) {
+                      if (snapshot.hasData) {
+                        return buildList(snapshot);
+                      } else if (snapshot.hasError) {
+                        return Text(snapshot.error.toString());
+                      }
+                      return Center(child: CircularProgressIndicator());
+                    })
+              ],
+            )));
   }
 
   Widget buildList(AsyncSnapshot<GithubUserResponse> snapshot) {
@@ -73,16 +79,5 @@ class _MyHomePageState extends State<MyHomePage> {
               return Card(
                   child: Text(snapshot.data.items[index].id.toString()));
             }));
-  }
-
-  _getGithubUsers() {
-    bloc.getGithubUsers(myController.text);
-  }
-
-  @override
-  void dispose() {
-    // Clean up the controller when the Widget is disposed
-    myController.dispose();
-    super.dispose();
   }
 }

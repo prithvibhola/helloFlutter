@@ -9,6 +9,7 @@ class GithubBloc {
   Observable<GithubUserResponse> get gitUsers => subject.stream;
 
   getGithubUsers(String query) async {
+    print(query);
     GithubUserResponse itemModel = await gitRepo.getGithubUsers(query);
     subject.sink.add(itemModel);
   }
