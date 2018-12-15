@@ -38,17 +38,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _printLatestValue() {
-//    bloc.getGithubUsers(myController.text);
-    print(myController.text);
-//    print("Second text field: ${myController.text}");
+    bloc.getGithubUsers(myController.text);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Github search'),
-      ),
+        appBar: AppBar(
+          title: Text('Github search'),
+        ),
         body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
