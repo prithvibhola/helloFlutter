@@ -9,12 +9,12 @@ class GithubBloc {
   Observable<GithubUserResponse> get gitUsers => subject.stream;
 
   getGithubUsers(String query) async {
-//    GithubUserResponse itemModel = await gitRepo.getGithubUsers(query);
-    subject
-        .distinct()
-        .debounce(const Duration(milliseconds: 500))
-        .switchMap<GithubUserResponse>((String q) => _searchUser(q));
-//        .add(itemModel);
+    GithubUserResponse itemModel = await gitRepo.getGithubUsers(query);
+    subject.sink.add(itemModel);
+
+    //        .distinct()
+//        .debounce(const Duration(milliseconds: 500))
+//        .switchMap<GithubUserResponse>((GithubUserResponse g) => _searchUser(query));
   }
 
   Stream<GithubUserResponse> _searchUser(String query) async* {

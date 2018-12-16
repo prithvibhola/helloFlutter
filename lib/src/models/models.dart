@@ -4,10 +4,10 @@ class GithubUserResponse {
   List<GithubUser> items = [];
 
   GithubUserResponse.fromJson(Map<String, dynamic> parsedJson) {
-    totalCount = parsedJson['total_Ωcount'];
+    totalCount = parsedJson['total_count'];
     incompleteResults = parsedJson['incomplete_results'];
     List<GithubUser> temp = [];
-    for (int i = 0; i < parsedJson['results'].length; i++) {
+    for (int i = 0; i < parsedJson['items'].length; i++) {
       GithubUser githubUser = GithubUser.fromJson(parsedJson['items'][i]);
       temp.add(githubUser);
     }
@@ -32,7 +32,7 @@ class GithubUser {
   final String eventsUrl;
   final String receivedEventsUrl;
   final String type;
-  final int score;
+  final double score;
 
   GithubUser(
       {this.login,
