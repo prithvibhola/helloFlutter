@@ -16,22 +16,22 @@ class GithubUserResponse {
 }
 
 class GithubUser {
-  final String login;
+  final String login,
+      nodeId,
+      avatarUrl,
+      url,
+      htmlUrl,
+      followersUrl,
+      followingUrl,
+      gistsUrl,
+      starredUrl,
+      subscriptionsUrl,
+      organizationsUrl,
+      reposUrl,
+      eventsUrl,
+      receivedEventsUrl,
+      type;
   final int id;
-  final String nodeId;
-  final String avatarUrl;
-  final String url;
-  final String htmlUrl;
-  final String followersUrl;
-  final String followingUrl;
-  final String gistsUrl;
-  final String starredUrl;
-  final String subscriptionsUrl;
-  final String organizationsUrl;
-  final String reposUrl;
-  final String eventsUrl;
-  final String receivedEventsUrl;
-  final String type;
   final double score;
 
   GithubUser(
