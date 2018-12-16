@@ -48,12 +48,14 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text('Github search'),
         ),
         body: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
             child: Column(
               children: <Widget>[
-                TextField(
-                  controller: myController,
-                ),
+                Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: TextField(
+                      controller: myController,
+                    )),
                 StreamBuilder(
                     stream: bloc.gitUsers,
                     builder:
@@ -75,7 +77,27 @@ class _MyHomePageState extends State<MyHomePage> {
             itemCount: snapshot.data.items.length,
             itemBuilder: (BuildContext ctxt, int index) {
               return Card(
-                  child: Text(snapshot.data.items[index].id.toString()));
+                  child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(children: <Widget>[
+                        ClipOval(
+                            child: Image.network(
+                                snapshot.data.items[index].avatarUrl,
+                                width: 50,
+                                height: 50)),
+                        Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: Text(snapshot.data.items[index].login,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87))),
+                        Expanded(
+                            child: Text(
+                          snapshot.data.items[index].score.toStringAsFixed(2),
+                          textAlign: TextAlign.right,
+                          style: TextStyle(color: Colors.black45),
+                        ))
+                      ])));
             }));
   }
 }
