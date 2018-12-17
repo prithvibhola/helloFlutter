@@ -4,14 +4,13 @@ import '../models/models.dart';
 
 class GithubBloc {
   final gitRepo = GithubRepository();
-  final subject = PublishSubject<String>();
 
-  Observable<GithubUserResponse> get gitUsers => subject.stream;
+  final subject = PublishSubject<String>();
+  final githubUserSubject = PublishSubject<GithubUserResponse>();
+
+  Stream<GithubUserResponse> get gitUser => githubUserSubject.stream;
 
   getGithubUsers(String query) async {
-//    GithubUserResponse itemModel = await gitRepo.getGithubUsers(query);
-//    subject.sink.add(itemModel);
-
     if (!subject.hasListener) searchGitUser();
     subject.add(query);
   }
@@ -21,7 +20,7 @@ class GithubBloc {
         .distinct()
         .debounce(const Duration(milliseconds: 500))
         .switchMap<GithubUserResponse>((String query) => _searchUser(query))
-        .listen((x) => print("Next: $x"),
+        .listen((x) => githubUserSubject.add(x),
             onError: (e, s) => print("Error: $e"),
             onDone: () => print("Completed"));
   }

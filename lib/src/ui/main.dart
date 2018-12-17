@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       controller: myController,
                     )),
                 StreamBuilder(
-                    stream: bloc.gitUsers,
+                    stream: bloc.gitUser,
                     builder:
                         (context, AsyncSnapshot<GithubUserResponse> snapshot) {
                       if (snapshot.hasData) {
