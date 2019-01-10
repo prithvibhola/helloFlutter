@@ -6,10 +6,9 @@ import '../models/models.dart';
 class ApiProvider {
   Client client = Client();
 
-  Future<GithubUserResponse> getGithuUsers(String query) async {
+  Future<GithubUserResponse> getGithubUsers(String query) async {
     final response =
         await client.get("https://api.github.com/search/users?q=$query");
-    print(response.body.toString());
     if (response.statusCode == 200) {
       return GithubUserResponse.fromJson(json.decode(response.body));
     } else {

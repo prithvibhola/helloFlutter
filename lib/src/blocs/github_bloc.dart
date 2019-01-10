@@ -6,9 +6,9 @@ class GithubBloc {
   final gitRepo = GithubRepository();
 
   final subject = PublishSubject<String>();
-  final githubUserSubject = PublishSubject<GithubUserResponse>();
+  final githubUserSubject = PublishSubject<Response<GithubUserResponse>>();
 
-  Stream<GithubUserResponse> get gitUser => githubUserSubject.stream;
+  Stream<Response<GithubUserResponse>> get gitUser => githubUserSubject.stream;
 
   getGithubUsers(String query) async {
     if (!subject.hasListener) searchGitUser();
@@ -20,7 +20,7 @@ class GithubBloc {
         .distinct()
         .debounce(const Duration(milliseconds: 500))
         .switchMap<GithubUserResponse>((String query) => _searchUser(query))
-        .listen((x) => githubUserSubject.add(x),
+        .listen((x) => githubUserSubject.add(Response.success(x)),
             onError: (e, s) => print("Error: $e"),
             onDone: () => print("Completed"));
   }
@@ -32,6 +32,7 @@ class GithubBloc {
 
   dispose() {
     subject.close();
+    githubUserSubject.close();
   }
 }
 

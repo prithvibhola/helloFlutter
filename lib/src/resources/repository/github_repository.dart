@@ -6,5 +6,5 @@ class GithubRepository {
   final apiProvider = ApiProvider();
 
   Future<GithubUserResponse> getGithubUsers(String query) =>
-      apiProvider.getGithuUsers(query);
+      apiProvider.getGithubUsers(query);
 }

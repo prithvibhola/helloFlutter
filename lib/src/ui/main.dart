@@ -60,12 +60,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     stream: bloc.gitUser,
                     builder:
                         (context, AsyncSnapshot<GithubUserResponse> snapshot) {
-                      if (snapshot.hasData) {
-                        return buildList(snapshot);
-                      } else if (snapshot.hasError) {
+                      if (snapshot.hasError) {
                         return Text(snapshot.error.toString());
+                      } else if (snapshot.hasData) {
+                        return buildList(snapshot);
                       }
-                      return Center(child: CircularProgressIndicator());
+//                      return Center(child: CircularProgressIndicator());
                     })
               ],
             )));
@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Expanded(
         child: ListView.builder(
             itemCount: snapshot.data.items.length,
-            itemBuilder: (BuildContext ctxt, int index) {
+            itemBuilder: (BuildContext context, int index) {
               return Card(
                   child: Padding(
                       padding: const EdgeInsets.all(16.0),

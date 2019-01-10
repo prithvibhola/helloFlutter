@@ -1,3 +1,25 @@
+enum ViewState { LOADING, SUCCESS, ERROR }
+
+class Response<T> {
+  ViewState state;
+  T data;
+  String errors;
+
+  Response(this.state, this.data, this.errors);
+
+  static Response<T> loading<T>() {
+    return Response(ViewState.LOADING, null, null);
+  }
+
+  static Response<T> success<T>(T data) {
+    return Response(ViewState.SUCCESS, data, null);
+  }
+
+  static Response<T> error<T>(String error) {
+    return Response(ViewState.SUCCESS, null, error);
+  }
+}
+
 class GithubUserResponse {
   int totalCount;
   bool incompleteResults;
