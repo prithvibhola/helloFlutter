@@ -38,15 +38,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _printLatestValue() {
-    if (myController.text != "") bloc.getGithubUsers(myController.text);
+    bloc.getGithubUsers(myController.text);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//        appBar: AppBar(
-//          title: Text('Github search'),
-//        ),
         body: new Container(
             decoration: new BoxDecoration(color: Colors.white),
             child: Padding(
