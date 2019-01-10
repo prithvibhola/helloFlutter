@@ -50,7 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
         body: new Container(
             decoration: new BoxDecoration(color: Colors.white),
             child: Padding(
-                padding: const EdgeInsets.only(top: 38.0, left: 16.0, right: 16.0),
+                padding:
+                    const EdgeInsets.only(top: 38.0, left: 16.0, right: 16.0),
                 child: Column(
                   children: <Widget>[
                     new Container(
@@ -71,7 +72,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         )),
                     StreamBuilder(
                         stream: bloc.gitUser,
-                        builder: (context, AsyncSnapshot<Response<GithubUserResponse>> snapshot) {
+                        builder: (context,
+                            AsyncSnapshot<Response<GithubUserResponse>>
+                                snapshot) {
                           if (snapshot.hasError) {
                             return Text(snapshot.error.toString());
                           } else if (snapshot.hasData) {
@@ -106,34 +109,39 @@ class _MyHomePageState extends State<MyHomePage> {
                 ))));
   }
 
-  Widget buildList(AsyncSnapshot<Response<GithubUserResponse>> snapshot, BuildContext context) {
+  Widget buildList(AsyncSnapshot<Response<GithubUserResponse>> snapshot,
+      BuildContext context) {
     return Expanded(
-        child: MediaQuery.removePadding(context: context, removeTop: true, child: ListView.builder(
-            itemCount: snapshot.data.data.items.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                  child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(children: <Widget>[
-                        ClipOval(
-                            child: Image.network(
-                                snapshot.data.data.items[index].avatarUrl,
-                                width: 50,
-                                height: 50)),
-                        Padding(
-                            padding: const EdgeInsets.only(left: 16.0),
-                            child: Text(snapshot.data.data.items[index].login,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87))),
-                        Expanded(
-                            child: Text(
+        child: MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: ListView.builder(
+                itemCount: snapshot.data.data.items.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                      child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(children: <Widget>[
+                            ClipOval(
+                                child: Image.network(
+                                    snapshot.data.data.items[index].avatarUrl,
+                                    width: 50,
+                                    height: 50)),
+                            Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: Text(
+                                    snapshot.data.data.items[index].login,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black87))),
+                            Expanded(
+                                child: Text(
                               snapshot.data.data.items[index].score
                                   .toStringAsFixed(2),
                               textAlign: TextAlign.right,
                               style: TextStyle(color: Colors.black45),
                             ))
-                      ])));
-            })));
+                          ])));
+                })));
   }
 }
