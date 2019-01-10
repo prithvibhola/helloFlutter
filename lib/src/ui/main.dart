@@ -44,23 +44,23 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Github search'),
-        ),
+//        appBar: AppBar(
+//          title: Text('Github search'),
+//        ),
         body: new Container(
             decoration: new BoxDecoration(color: Colors.white),
             child: Padding(
-                padding:
-                    const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+                padding: const EdgeInsets.only(top: 38.0, left: 16.0, right: 16.0),
                 child: Column(
                   children: <Widget>[
                     new Container(
-                        padding: const EdgeInsets.only(bottom: 0.0),
+                        padding: const EdgeInsets.only(bottom: 8.0),
                         child: TextField(
                           decoration: new InputDecoration(
                               hintText: 'Search for github user.....',
                               prefixIcon: Icon(Icons.search),
                               border: null,
+                              filled: true,
                               enabledBorder: new UnderlineInputBorder(
                                   borderSide:
                                       new BorderSide(color: Colors.white)),
@@ -71,9 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         )),
                     StreamBuilder(
                         stream: bloc.gitUser,
-                        builder: (context,
-                            AsyncSnapshot<Response<GithubUserResponse>>
-                                snapshot) {
+                        builder: (context, AsyncSnapshot<Response<GithubUserResponse>> snapshot) {
                           if (snapshot.hasError) {
                             return Text(snapshot.error.toString());
                           } else if (snapshot.hasData) {
@@ -88,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   if (myController.text.trim() == "")
                                     return new Container();
                                   else
-                                    return buildList(snapshot);
+                                    return buildList(snapshot, context);
                                   break;
                                 }
                               case ViewState.ERROR:
@@ -108,9 +106,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ))));
   }
 
-  Widget buildList(AsyncSnapshot<Response<GithubUserResponse>> snapshot) {
+  Widget buildList(AsyncSnapshot<Response<GithubUserResponse>> snapshot, BuildContext context) {
     return Expanded(
-        child: ListView.builder(
+        child: MediaQuery.removePadding(context: context, removeTop: true, child: ListView.builder(
             itemCount: snapshot.data.data.items.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
@@ -130,12 +128,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                     color: Colors.black87))),
                         Expanded(
                             child: Text(
-                          snapshot.data.data.items[index].score
-                              .toStringAsFixed(2),
-                          textAlign: TextAlign.right,
-                          style: TextStyle(color: Colors.black45),
-                        ))
+                              snapshot.data.data.items[index].score
+                                  .toStringAsFixed(2),
+                              textAlign: TextAlign.right,
+                              style: TextStyle(color: Colors.black45),
+                            ))
                       ])));
-            }));
+            })));
   }
 }
