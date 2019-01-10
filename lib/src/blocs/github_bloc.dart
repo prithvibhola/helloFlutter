@@ -11,6 +11,11 @@ class GithubBloc {
   Stream<Response<GithubUserResponse>> get gitUser => githubUserSubject.stream;
 
   getGithubUsers(String query) async {
+    if (query.trim() == "") {
+      githubUserSubject.add(Response.success(null));
+      return;
+    }
+    githubUserSubject.add(Response.loading());
     if (!subject.hasListener) searchGitUser();
     subject.add(query);
   }
@@ -21,8 +26,7 @@ class GithubBloc {
         .debounce(const Duration(milliseconds: 500))
         .switchMap<GithubUserResponse>((String query) => _searchUser(query))
         .listen((x) => githubUserSubject.add(Response.success(x)),
-            onError: (e, s) => print("Error: $e"),
-            onDone: () => print("Completed"));
+            onError: (e, s) => githubUserSubject.add(Response.error(e)));
   }
 
   Stream<GithubUserResponse> _searchUser(String query) async* {
